@@ -1,12 +1,5 @@
 #!/bin/bash
 def main(i):
-   #i=5
-   import sys
-   import os
-   import argparse
-   #parser= argparse.ArgumentParser()
-   #parser.add_argument('i')
-   #args= parser.parse_args()
    from keras.layers import Convolution2D 
    from keras.layers import MaxPooling2D
    from keras.layers import Dense
@@ -15,7 +8,6 @@ def main(i):
    from keras.preprocessing.image import ImageDataGenerator
    print("import successfully")
    model=Sequential()
-   #i=int(sys.argv[1])
    pool=(2,2)
    model.add(Convolution2D(filters=32,
                             kernel_size=(3,3),
@@ -59,5 +51,3 @@ def main(i):
    x=result.history['accuracy'][0]*100
    print("current accuracy=", x)
    return x
-
-print(main(2))
