@@ -1,4 +1,6 @@
 #!/bin/bash
+import sys
+i=int(sys.argv[1])
 def main(i):
    from keras.layers import Convolution2D 
    from keras.layers import MaxPooling2D
@@ -33,21 +35,25 @@ def main(i):
     
    train_datagen = ImageDataGenerator(rescale=1./255,shear_range=0.2,zoom_range=0.2,horizontal_flip=True)
    test_datagen = ImageDataGenerator(rescale=1./255)
-   training_set = train_datagen.flow_from_directory('/root/Dataset/',
-   target_size=(224, 224),
-   batch_size=20,
-   class_mode='binary')
-   test_set = test_datagen.flow_from_directory('/root/Dataset/',
-   target_size=(224, 224),
-   batch_size=20,
-   class_mode='binary')
-   epochs=i 
+   training_set = train_datagen.flow_from_directory('/code_test/Dataset/',
+                  target_size=(224, 224),
+                  batch_size=20,
+                  class_mode='binary')
+   test_set = test_datagen.flow_from_directory('/code_test/Dataset/',
+                  target_size=(224, 224),
+                  batch_size=20,
+                  class_mode='binary')
+                   
    result= model.fit(training_set,
-   steps_per_epoch=20,
-   epochs=i,
-   validation_data=test_set,
-   validation_steps=20)        
+                  steps_per_epoch=20,
+                  epochs=i,
+                  validation_data=test_set,
+                  validation_steps=20)        
    model.summary()
-   accuracy=result.history['accuracy'][epochs-1]*100
+   accuracy=result.history['accuracy'][-1]*100
    print("current accuracy=", accuracy)
-   return accuracy
+   sys.stdout=open("a.txt","w")
+   print(int(result.history['accuracy'][-1]*100))
+   sys.stdout.close()
+   
+main(i)
