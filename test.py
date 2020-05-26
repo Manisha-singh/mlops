@@ -33,21 +33,21 @@ def main(i):
     
    train_datagen = ImageDataGenerator(rescale=1./255,shear_range=0.2,zoom_range=0.2,horizontal_flip=True)
    test_datagen = ImageDataGenerator(rescale=1./255)
-   training_set = train_datagen.flow_from_directory('C://Users//RAM BABU SINGH//OneDrive//Desktop//Dataset',
+   training_set = train_datagen.flow_from_directory('/root/Dataset/',
    target_size=(224, 224),
    batch_size=20,
    class_mode='binary')
-   test_set = test_datagen.flow_from_directory('C://Users//RAM BABU SINGH//OneDrive//Desktop//Dataset',
+   test_set = test_datagen.flow_from_directory('/root/Dataset/',
    target_size=(224, 224),
    batch_size=20,
    class_mode='binary')
-    
+   epochs=i 
    result= model.fit(training_set,
    steps_per_epoch=20,
-   epochs=1,
+   epochs=i,
    validation_data=test_set,
    validation_steps=20)        
    model.summary()
-   x=result.history['accuracy'][0]*100
-   print("current accuracy=", x)
-   return x
+   accuracy=result.history['accuracy'][epochs-1]*100
+   print("current accuracy=", accuracy)
+   return accuracy
